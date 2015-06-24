@@ -3600,21 +3600,21 @@ h1.logo {
   background-color: #22828a;
 }
 .marker-cluster-small {
-  background-color: rgba(35, 129, 190, 0.6);
+  background-color: rgba(35, 129, 190, 0.5);
 }
 .marker-cluster-small div {
   color: white;
-  background-color: rgba(35, 129, 190, 0.6);
+  background-color: rgba(35, 129, 190, 0.5);
 }
 .marker-cluster-medium {
-  background-color: rgba(35, 129, 190, 0.6);
+  background-color: rgba(35, 129, 190, 0.5);
 }
 .marker-cluster-medium div {
   color: white;
-  background-color: rgba(6, 88, 158, 0.6);
+  background-color: rgba(6, 88, 158, 0.55);
 }
 .marker-cluster-large {
-  background-color: rgba(35, 129, 190, 0.6);
+  background-color: rgba(35, 129, 190, 0.5);
 }
 .marker-cluster-large div {
   color: white;
