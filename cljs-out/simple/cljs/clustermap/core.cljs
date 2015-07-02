@@ -5,6 +5,7 @@
    [clojure.string :as str]
    [weasel.repl :as ws-repl]
    [figwheel.client :as fw :include-macros true]
+   [om.core :as om :include-macros true]
    [clustermap.api :as api]
    [clustermap.app :as app]
    [clustermap.filters :as filters]
@@ -187,71 +188,6 @@
 
                          ;; specifications for dynamic components
                          :component-specs [
-                                           ;; {:id :hub
-                                           ;;  :type :tag-checkboxes
-                                           ;;  :label "Hub"
-                                           ;;  :sorted true
-                                           ;;  :tag-type "startup_region"
-                                           ;;  :tags [{:value "nuts_1__UKI" :label "London"}
-                                           ;;         {:value "nuts_1__FR1" :label "Paris"}
-                                           ;;         {:value "nuts_2__UKD3" :label "Manchester"}
-                                           ;;         {:value "nuts_2__FI1B" :label "Helsinki"}
-                                           ;;         {:value "nuts_2__SE11" :label "Stockholm"}
-                                           ;;         {:value "nuts_1__BE1" :label "Brussels"}
-                                           ;;         {:value "nuts_2__RO32" :label "Bucuresti"}
-                                           ;;         {:value "nuts_1__ES3" :label "Madrid"}
-                                           ;;         {:value "nuts_3__DE212" :label "Munich"}
-                                           ;;         {:value "nuts_1__DE3" :label "Berlin"}
-
-                                           ;;         ]}
-
-                                           ;; {:id :boundaryline
-                                           ;;  :type :external
-                                           ;;  :label "Region"
-                                           ;;  :formatter (fn [content] [:h1 content])
-                                           ;;  :default-text "All (select from map)"
-                                           ;;  :set-filter-for-url (fn [boundaryline-id set-filter]
-                                           ;;                        (let [ch (when boundaryline-id
-                                           ;;                                   (bl/get-or-fetch-boundaryline (get-app-state-atom) :boundarylines boundaryline-id))]
-                                           ;;                          (go
-                                           ;;                            (when-let [bl (when ch (<! ch))]
-                                           ;;                              (let [bl-filter (when boundaryline-id (boundaryline-filter boundaryline-id))
-                                           ;;                                    bl-name (when boundaryline-id (aget bl "compact_name"))]
-                                           ;;                                (set-filter bl-filter bl-name))))))}
-
-                                           ;; {:id :age
-                                           ;;  :type :checkboxes
-                                           ;;  :label "Age"
-                                           ;;  :options [;; {:value "any" :filter nil :label "Any" :omit-description true}
-                                           ;;            {:value "new" :label "< 5 years" :filter {:range {"!formation_date" {:gte "2010-01-01"}}}}
-                                           ;;            {:value "mid" :label "5 - 10 years" :filter {:range {"!formation_date" {:gte "2005-01-01"
-                                           ;;                                                                                    :lt "2010-01-01"}}}}
-                                           ;;            {:value "old" :label "10 - 15 years" :filter {:range {"!formation_date" {:gte "2000-01-01"
-                                           ;;                                                                                     :lt "2005-01-01"}}}}
-                                           ;;            {:value "oldest" :label ">= 15 years" :filter {:range {"!formation_date" {:lt "2000-01-01"}}}}]}
-
-                                           ;; {:id :total-funding
-                                           ;;  :type :checkboxes
-                                           ;;  :label "Total funding"
-                                           ;;  :options [;; {:value "any" :label "Any" :filter nil :omit-description true}
-                                           ;;            {:value "min" :label "< £500k" :filter {:range {"!total_funding" {:lt 500000}}}}
-                                           ;;            {:value "low" :label "£500k - £5m" :filter {:range {"!total_funding" {:gte 500000 :lt 5000000}}}}
-                                           ;;            {:value "lowmid" :label "£5m - £10m" :filter {:range {"!total_funding" {:gte 5000000 :lt 10000000}}}}
-                                           ;;            {:value "highmid" :label "£10m - £100m" :filter {:range {"!total_funding" {:gte 10000000 :lt 100000000}}}}
-                                           ;;            {:value "high" :label "> £100m" :filter {:range {"!total_funding" {:gte 100000000}}}}
-                                           ;;            ]}
-
-                                           ;; {:id :latest-turnover
-                                           ;;  :type :checkboxes
-                                           ;;  :label "Turnover"
-                                           ;;  :options [;; {:value "any" :label "Any" :filter nil :omit-description true}
-                                           ;;            {:value "min" :label "< £500k" :filter {:range {"!latest_turnover" {:lt 500000}}}}
-                                           ;;            {:value "low" :label "£500k - £5m" :filter {:range {"!latest_turnover" {:gte 500000 :lt 5000000}}}}
-                                           ;;            {:value "lowmid" :label "£5m - £10m" :filter {:range {"!latest_turnover" {:gte 5000000 :lt 10000000}}}}
-                                           ;;            {:value "highmid" :label "£10m - £100m" :filter {:range {"!latest_turnover" {:gte 10000000 :lt 100000000}}}}
-                                           ;;            {:value "high" :label "> £100m" :filter {:range {"!latest_turnover" {:gte 100000000}}}}
-                                           ;;            ]}
-
                                            {:id :sector
                                             :type :tag-checkboxes
                                             :label "Sector"
@@ -277,21 +213,10 @@
 
                                            {:id :highgrowth
                                             :type :checkboxes
-                                            :label "High growth"
+                                            :label "Scaleups"
                                             :visible true
-                                            :options [{:value "latest" :label "High growth companies" :filter scaleup-filter}
+                                            :options [{:value "latest" :label "Scaleup companies" :filter scaleup-filter}
                                                       ]}
-
-                                           ;; {:id :ds
-                                           ;;  :type :tag
-                                           ;;  :label "Source"
-                                           ;;  :sorted true
-                                           ;;  :tag-type "datasource"
-                                           ;;  :tags [{:value "" :label "Any" :omit-description true}
-                                           ;;         {:value "crunchbase" :label "Crunchbase"}
-                                           ;;         {:value "angellist" :label "Angellist"}
-                                           ;;         {:value "seeddb" :label "Seed-DB"}
-                                           ;;         {:value "registry" :label "Registry"}]}
                                            ]
 
                          ;; base-filters AND combined with dynamic components
@@ -358,6 +283,9 @@
                                   :boxZoom true}
 
                     :location {:cluster false
+                               :location-attr "!location"
+                               :attrs ["?natural_id" "!name" "!location" "!latest_employee_count" "!latest_turnover"]
+                               :sort-spec [{"!latest_turnover" "desc"}{"!latest_employment" "desc"}]
                                :marker-opts {:display-turnover true
                                              :display-employee-count false
                                              :display-principal-name false}
@@ -560,7 +488,7 @@
    :trends-timeline {:query {:index-name "company-accounts"
                              :index-type "accounts"
                              :time-variable "?accounts_date"
-                             :metrics {:variable :!turnover :title "-" :metric :sum}
+                             :metrics {:variable :!turnover :title "Turnover (£)" :metric :sum}
                              :interval "year"
                              :before "2014-01-01"}
                      :color "#28828a"
@@ -594,7 +522,7 @@
                               :nested-filter {:term {:type "broad_12_sectors"}}
                               :stats-attr "!latest_turnover"}
                       :metrics [{:metric :sum
-                                 :title "-"
+                                 :title "Total turnover (£)"
                                  :label-formatter (fn [] (this-as this (num/mixed (.-value this))))}]
                       :bar-width 20
                       :bar-color "#28828a"
@@ -633,7 +561,7 @@
                                                            {:key "250k"  :from 250000  :to 500000}
                                                            {:key "500k"  :from 500000  :to 1000000}
                                                            {:key "1m"    :from 1000000 :to 5000000}
-                                                           {:key "5m"    :from 5000000 }] }}}
+                                                           {:key "5m"    :from 5000000 }]}}}
 
                               :metric-path [:companies :metric]
                               :metric-aggs {:companies
@@ -791,9 +719,19 @@
    ;;          :filter-spec [:dynamic-filter-spec :composed :all]}}
 
    {:name :sector-histogram-var-select
-    :f (partial select-chooser/select-chooser-component "Variable" :stats-attr [["!latest_turnover" "Total turnover (£)"] ["!latest_employee_count" "Total employees"] ["?counter" "Number of companies"]])
+    :f (partial
+        select-chooser/select-chooser-component
+        "Variable"
+        [{:value "!latest_turnover" :label "Total turnover (£)"}
+         {:value "!latest_employee_count" :label "Total employees"}
+         {:value "?counter" :label "Number of companies"}]
+        (fn
+          ([cursor] (get-in cursor [:query :stats-attr]))
+          ([cursor record]
+           (om/update! cursor [:query :stats-attr] (:value record))
+           (om/update! cursor [:metrics 0 :title] (:label record)))))
     :target "sector-histogram-var-select-component"
-    :path [:sector-histogram :query]}
+    :path [:sector-histogram]}
 
    {:name :sector-histogram
     :f tag-histogram/tag-histogram
@@ -814,9 +752,19 @@
             :filter-spec [:dynamic-filter-spec :composed :all]}}
 
    {:name :trends-timeline-var-select
-    :f (partial select-chooser/select-chooser-component "Variable" :variable [[:!turnover "Turnover (£)"][:!employee_count "Employees"]])
+    :f (partial
+        select-chooser/select-chooser-component
+        "Variable"
+        [{:value :!turnover :label "Turnover (£)"}
+         {:value :!employee_count :label "Employees"}]
+        (fn
+          ([cursor] (get-in cursor [:query :metrics :variable]))
+          ([cursor record]
+           (om/update! cursor [:query :metrics :variable] (:value record))
+           (om/update! cursor [:query :metrics :title] (:label record))
+           )))
     :target "trends-timeline-var-select-component"
-    :path [:trends-timeline :query :metrics]}
+    :path [:trends-timeline]}
 
    ;; {:name :employment-timeline
    ;;  :f timeline-chart/timeline-chart
