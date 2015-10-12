@@ -3,8 +3,6 @@
                    [cljs.core.async.macros :refer [go]])
   (:require
    [clojure.string :as str]
-   [weasel.repl :as ws-repl]
-   [figwheel.client :as fw :include-macros true]
    [om.core :as om :include-macros true]
    [clustermap.api :as api]
    [clustermap.app :as app]
@@ -869,17 +867,17 @@
 
 (cond
 
- ;; dev mode : configure repl and figwheel code-reloading
- js/config.repl
- (do
-   (ws-repl/connect "ws://localhost:9001" :verbose true)
-   (fw/watch-and-reload
-    :websocket-url "ws://localhost:3449/figwheel-ws"
-    :jsload-callback (fn []
-                       (init)
-                       (.log js/console "restarted")))
-   (init))
+  ;; dev mode : configure repl and figwheel code-reloading
+  ;; js/config.repl
+  ;; (do
+  ;;   (ws-repl/connect "ws://localhost:9001" :verbose true)
+  ;;   (fw/watch-and-reload
+  ;;    :websocket-url "ws://localhost:3449/figwheel-ws"
+  ;;    :jsload-callback (fn []
+  ;;                       (init)
+  ;;                       (.log js/console "restarted")))
+  ;;   (init))
 
- ;; production : just run the app
- true
- (init))
+  ;; production : just run the app
+  true
+  (init))
