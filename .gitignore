@@ -6,3 +6,4 @@
 /checkouts
 /.lein-repl-history
 /cljs-out/simple/cljs/
+/cljs-out/none/
