@@ -529,92 +529,88 @@
                       :tag-data nil
                       :tag-agg-data nil}
 
-   :revenue-bands {:controls {:index "companies"
+   :revenue-bands {:query {:index-name "companies"
+                           :index-type "company"
+
+                           :row-path [:accounts :row]
+                           :row-aggs {:accounts
+                                      {:nested {:path "?accounts"}
+
+                                       :aggs
+                                       {:row {:range {:field "rank"
+                                                      :ranges [{:key "latest" :from 1 :to 2}]}}}} }
+
+
+                           :col-path [:col]
+                           :col-aggs {:col
+                                      {:range {:field "turnover"
+                                               :ranges [{:key "lt50k" :from 0       :to 50000 }
+                                                        {:key "50k"   :from 50000   :to 100000 }
+                                                        {:key "100k"  :from 100000  :to 250000 }
+                                                        {:key "250k"  :from 250000  :to 500000}
+                                                        {:key "500k"  :from 500000  :to 1000000}
+                                                        {:key "1m"    :from 1000000 :to 5000000}
+                                                        {:key "5m"    :from 5000000 }]}}}
+
+                           :metric-path [:companies :metric]
+                           :metric-aggs {:companies
+                                         {:reverse_nested {}
+                                          :aggs
+                                          {:metric {:value_count {:field "?natural_id"}}}}}
+                           :render-fn (fn [v] (num/fnum v))}
+                   :view {:rows [{:key "latest" :label "Companies in size band"}]
+                          :cols [{:key "lt50k"  :label "Less than £50k"}
+                                 {:key "50k"  :label "£50k - £100k"}
+                                 {:key "100k" :label "£100k - £250k"}
+                                 {:key "250k"   :label "£250k - £500k"}
+                                 {:key "500k"  :label "£500k - £1m"}
+                                 {:key "1m"  :label "£1m - £5m"}
+                                 {:key "5m" :label "More than £5m"}]
+                          :color "#28828a"
+                          :render-fn (fn [v] (num/fnum v))}
+                   :table-data nil}
+
+   :employment-bands {:query {:index-name "companies"
                               :index-type "company"
 
-                              :color "#28828a"
-
-                              :rows [{:key "2013" :label "2013"}]
                               :row-path [:accounts :row]
                               :row-aggs {:accounts
                                          {:nested {:path "?accounts"}
 
                                           :aggs
-                                          {:row {:range {:field "accounts_date"
-                                                         :ranges [{:key "2013" :from "2013-01-01" :to "2014-01-01"}]}}}} }
+                                          {:row {:range {:field "rank"
+                                                         :ranges [{:key "latest" :from 1 :to 2}]}}}} }
 
-                              :cols [{:key "lt50k"  :label "Less than £50k"}
-                                     {:key "50k"  :label "£50k - £100k"}
-                                     {:key "100k" :label "£100k - £250k"}
-                                     {:key "250k"   :label "£250k - £500k"}
-                                     {:key "500k"  :label "£500k - £1m"}
-                                     {:key "1m"  :label "£1m - £5m"}
-                                     {:key "5m" :label "More than £5m"}]
                               :col-path [:col]
                               :col-aggs {:col
-                                         {:range {:field "turnover"
-                                                  :ranges [{:key "lt50k" :from 0       :to 50000 }
-                                                           {:key "50k"   :from 50000   :to 100000 }
-                                                           {:key "100k"  :from 100000  :to 250000 }
-                                                           {:key "250k"  :from 250000  :to 500000}
-                                                           {:key "500k"  :from 500000  :to 1000000}
-                                                           {:key "1m"    :from 1000000 :to 5000000}
-                                                           {:key "5m"    :from 5000000 }]}}}
+                                         {:range {:field "employee_count"
+                                                  :ranges [{:key "l"    :from 0    :to 5 }
+                                                           {:key "5"    :from 5    :to 10 }
+                                                           {:key "10"   :from 10   :to 20 }
+                                                           {:key "20"   :from 20   :to 50 }
+                                                           {:key "50"   :from 50   :to 100 }
+                                                           {:key "100"  :from 100  :to 250 }
+                                                           {:key "250"  :from 250  :to 500 }
+                                                           {:key "500"  :from 500  :to 2500 }
+                                                           {:key "2500" :from 2500 }] }}}
 
                               :metric-path [:companies :metric]
                               :metric-aggs {:companies
                                             {:reverse_nested {}
                                              :aggs
-                                             {:metric {:cardinality {:field "?natural_id"}}}}}
-                              :render-fn (fn [v] (num/fnum v))
-
-                              }
-                   :table-data nil}
-
-   :employment-bands {:controls {:index "companies"
-                                 :index-type "company"
-
-                                 :color "#28828a"
-
-                                 :rows [{:key "2013" :label "2013"}]
-                                 :row-path [:accounts :row]
-                                 :row-aggs {:accounts
-                                            {:nested {:path "?accounts"}
-
-                                             :aggs
-                                             {:row {:range {:field "accounts_date"
-                                                            :ranges [{:key "2013" :from "2013-01-01" :to "2014-01-01"}]}}}} }
-
-                                 :cols [{:key "l"    :label "1-4"}
-                                        {:key "5"    :label "5-9"}
-                                        {:key "10"   :label "10-19"}
-                                        {:key "20"   :label "20-49"}
-                                        {:key "50"   :label "50-99"}
-                                        {:key "100"  :label "100-249"}
-                                        {:key "250"  :label "250-499"}
-                                        {:key "500"  :label "500-2499"}
-                                        {:key "2500" :label "2500 or more"}]
-                                 :col-path [:col]
-                                 :col-aggs {:col
-                                            {:range {:field "employee_count"
-                                                     :ranges [{:key "l"    :from 0    :to 5 }
-                                                              {:key "5"    :from 5    :to 10 }
-                                                              {:key "10"   :from 10   :to 20 }
-                                                              {:key "20"   :from 20   :to 50 }
-                                                              {:key "50"   :from 50   :to 100 }
-                                                              {:key "100"  :from 100  :to 250 }
-                                                              {:key "250"  :from 250  :to 500 }
-                                                              {:key "500"  :from 500  :to 2500 }
-                                                              {:key "2500" :from 2500 }] }}}
-
-                                 :metric-path [:companies :metric]
-                                 :metric-aggs {:companies
-                                               {:reverse_nested {}
-                                                :aggs
-                                                {:metric {:cardinality {:field "?natural_id"}}}}}
-                                 :render-fn (fn [v] (num/fnum v))
-
-                                 }
+                                             {:metric {:cardinality {:field "?natural_id"}}}}}}
+                      :view {:rows [{:key "latest" :label "Companies in size band"}]
+                             :cols [{:key "l"    :label "1-4"}
+                                    {:key "5"    :label "5-9"}
+                                    {:key "10"   :label "10-19"}
+                                    {:key "20"   :label "20-49"}
+                                    {:key "50"   :label "50-99"}
+                                    {:key "100"  :label "100-249"}
+                                    {:key "250"  :label "250-499"}
+                                    {:key "500"  :label "500-2499"}
+                                    {:key "2500" :label "2500 or "}]
+                             :color "#28828a"
+                             :render-fn (fn [v] (num/fnum v))}
                       :table-data nil}
 
    :view :trends
