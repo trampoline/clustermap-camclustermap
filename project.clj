@@ -5,14 +5,17 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/clojurescript "1.7.170" :scope "provided"]
                  [org.clojure/core.async "0.2.374" :scope "provided"]
+                 [cljsjs/react "0.14.3-0"]
+                 [cljsjs/react-dom "0.14.3-1"]
+                 [cljsjs/react-dom-server "0.14.3-0"]
                  [domina "1.0.3"]
                  [jayq "2.5.4"]
                  [org.omcljs/om "1.0.0-alpha21"]
                  [prismatic/om-tools "0.4.0" :exclusions [org.clojure/clojure]]
-                 [sablono "0.4.0"]
+                 [sablono "0.5.3"]
                  [hiccups "0.3.0"]
                  [secretary "1.2.3"]
-                 [com.andrewmcveigh/cljs-time "0.3.14"]
+                 [com.andrewmcveigh/cljs-time "0.4.0"]
                  [binaryage/devtools "0.4.1"]
                  [clustermap-components "0.1.0-SNAPSHOT"]
                  ]
@@ -23,7 +26,6 @@
 
   :jvm-opts ["-Xmx1g"
              "-server"
-             "-XX:MaxPermSize=128m"
              "-XX:+CMSClassUnloadingEnabled"
              "-XX:+UseConcMarkSweepGC"]
 
@@ -33,7 +35,7 @@
             [lein-figwheel "0.5.0-2"]]
 
   :profiles {:dev {:dependencies [[weasel "0.7.0"]
-                                  [figwheel "0.5.0-2"]]}}
+                                  [figwheel "0.5.0-3"]]}}
   :figwheel {:css-dirs ["public/css"]}
 
   :cljsbuild {
