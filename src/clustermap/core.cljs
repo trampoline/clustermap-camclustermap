@@ -227,7 +227,7 @@
                            :base-filters {:all nil}
                            :composed {}}
 
-   :company-search {:controls {:search-fn api/company-search
+   :company-search {:controls {:search-fn #(api/company-search % {:search-fields ["postcode"]})
                                :render-fn (fn [r] [[:div (:name r)]])
                                :col-headers nil ;; ["Name"]
                                :click-fn (fn [r]
