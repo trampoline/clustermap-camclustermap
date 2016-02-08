@@ -215,6 +215,16 @@
                                             :visible true
                                             :options [{:value "latest" :label "Scaleup companies" :filter scaleup-filter}
                                                       ]}
+
+                                           {:id :employee-count
+                                            :type :checkboxes
+                                            :label "Employees"
+                                            :visible true
+                                            :controls true
+                                            :options [{:value "min" :label "1" :filter {:range {"!latest_employee_count" {:lte 1}}}}
+                                                      {:value "min+" :label "2–9" :filter {:range {"!latest_employee_count" {:gt 1 :lte 9}}}}
+                                                      {:value "min++" :label "10–249" :filter {:range {"!latest_employee_count" {:gt 9 :lte 249}}}}
+                                                      {:value "max" :label "250 or more" :filter {:range {"!latest_employee_count" {:gt 249}}}}]}
                                            ]
 
                          ;; base-filters AND combined with dynamic components
