@@ -11,7 +11,7 @@
                  [domina "1.0.3"]
                  [jayq "2.5.4"]
                  [org.omcljs/om "1.0.0-alpha21"]
-                 [prismatic/om-tools "0.4.0" :exclusions [org.clojure/clojure]]
+                 [prismatic/schema "1.0.4"]
                  [sablono "0.5.3"]
                  [hiccups "0.3.0"]
                  [secretary "1.2.3"]
@@ -20,10 +20,6 @@
                  [clustermap-components "0.1.0-SNAPSHOT"]
                  ]
 
-  ;;  :exclusions [org.clojure/google-closure-library
-  ;;               org.clojure/google-closure-library-third-party
-  ;;               goog-jar]
-
   :jvm-opts ["-Xmx1g"
              "-server"
              "-XX:+CMSClassUnloadingEnabled"
@@ -31,12 +27,15 @@
 
   :source-paths ["src"]
 
-  :plugins [[lein-cljsbuild "1.1.1"]
-            [lein-figwheel "0.5.0-2"]]
+  :plugins [[lein-cljsbuild "1.1.2"]
+            [lein-figwheel "0.5.0-6"]]
 
-  :profiles {:dev {:dependencies [[weasel "0.7.0"]
-                                  [figwheel "0.5.0-3"]]}}
+  :profiles {:dev {:dependencies [#_[weasel "0.7.0"]
+                                  [com.cemerick/piggieback "0.2.1"]
+                                  [figwheel-sidecar "0.5.0-6"]
+                                  [figwheel "0.5.0-6"]]}}
   :figwheel {:css-dirs ["public/css"]}
+  :repl-options {:nrepl-middleware [cemerick.piggieback/wrap-cljs-repl]}
 
   :cljsbuild {
               :builds {:none
