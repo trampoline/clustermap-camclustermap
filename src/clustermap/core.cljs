@@ -225,6 +225,18 @@
                                                       {:value "min+" :label "2–9" :filter {:range {"!latest_employee_count" {:gt 1 :lte 9}}}}
                                                       {:value "min++" :label "10–249" :filter {:range {"!latest_employee_count" {:gt 9 :lte 249}}}}
                                                       {:value "max" :label "250 or more" :filter {:range {"!latest_employee_count" {:gt 249}}}}]}
+
+                                           {:id :latest-turnover
+                                            :type :checkboxes
+                                            :label "Turnover"
+                                            :visible false
+                                            :controls true
+                                            :options [;; {:value "any" :label "Any" :filter nil}
+                                                      {:value "min" :label "Less than £0.2 million" :filter {:range {"!latest_turnover" {:lt 200000}}}}
+                                                      {:value "low" :label "£0.2 – 1 million" :filter {:range {"!latest_turnover" {:gte 200000 :lt 1000000}}}}
+                                                      {:value "lowmid" :label "£1 – 35 million" :filter {:range {"!latest_turnover" {:gte 10000000 :lt 35000000}}}}
+                                                      {:value "highest" :label "More than £35 million" :filter {:range {"!latest_turnover" {:gte 35000000}}}}
+                                                      ]}
                                            ]
 
                          ;; base-filters AND combined with dynamic components
