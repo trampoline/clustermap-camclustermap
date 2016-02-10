@@ -351,9 +351,9 @@
                                                    [:div.metric.metric-2
                                                     [:span.name "Emp"] [:span.value (num/compact (:latest_employee_count i))]]]])
                                :item-click-fn (fn [r e]
-                                                     (make-company-selection (:natural_id r))
-                                                     (app/navigate @app-instance "company")
-                                                     (.log js/console (clj->js ["CLICK" r e])))}
+                                                (make-company-selection (:natural_id r))
+                                                (app/navigate @app-instance "company")
+                                                (.log js/console (clj->js ["CLICK" r e])))}
 
                     :zoom nil
                     :bounds nil
