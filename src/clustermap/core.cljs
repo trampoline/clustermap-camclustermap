@@ -249,7 +249,9 @@
                            :base-filters {:all nil}
                            :composed {}}
 
-   :company-search {:controls {:search-fn #(api/company-search % {:search-fields ["postcode"]})
+   :company-search {:controls {:search-fn #(if-not (str/blank? %)
+                                             (api/company-search % {:search-fields ["postcode"]})
+                                             (api/company-search))
                                :render-fn (fn [r] [[:div (:name r)]
                                                    [:div (:postcode r)]])
                                :col-headers  ["Name" "Post code"]
