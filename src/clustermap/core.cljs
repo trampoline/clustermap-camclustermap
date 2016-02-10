@@ -250,8 +250,9 @@
                            :composed {}}
 
    :company-search {:controls {:search-fn #(api/company-search % {:search-fields ["postcode"]})
-                               :render-fn (fn [r] [[:div (:name r)]])
-                               :col-headers nil ;; ["Name"]
+                               :render-fn (fn [r] [[:div (:name r)]
+                                                   [:div (:postcode r)]])
+                               :col-headers  ["Name" "Post code"]
                                :click-fn (fn [r]
                                            (make-company-selection (:natural_id r))
                                            (app/navigate @app-instance "company"))
