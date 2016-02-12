@@ -209,6 +209,41 @@
                                                    {:value "not_known" :label "Unknown"}
                                                    ]}
 
+                                           {:id :narrow-sector
+                                            :type :tag-checkboxes
+                                            :label "Narrow Sector"
+                                            :sorted true
+                                            :visible false
+                                            :controls true
+                                            :tag-type "narrow_sectors"
+                                            :tags [
+                                                   {:value "quantity_surveyors" :label "Quantity surveyors"}
+                                                   {:value "information_services" :label "Information services"}
+                                                   {:value "tv__video_production" :label "TV & video production"}
+                                                   {:value "data_processing__hosting" :label "Data processing & hosting"}
+                                                   {:value "hightech_manufacturing" :label "High-tech Manufacturing"}
+                                                   {:value "public_relations" :label "Public relations"}
+                                                   {:value "transport_leasing" :label "Transport leasing"}
+                                                   {:value "other_construction" :label "Other construction"}
+                                                   {:value "hotels_pubs_and_restaurants" :label "Hotels, pubs and restaurants"}
+                                                   {:value "plastering_joinery_decoration" :label "Plastering, joinery decoration"}
+                                                   {:value "medlowtech_manufacturing" :label "Med-low-tech manufacturing"}
+                                                   {:value "primary" :label "Primary"}
+                                                   {:value "architects" :label "Architects"}
+                                                   {:value "lowtech_manufacturing" :label "Low-tech manufacturing"}
+                                                   {:value "utilities" :label "Utilities"}
+                                                   {:value "kis_professional_business_services" :label "KIS Professional Business Services"}
+                                                   {:value "developer__builder" :label "Developer / Builder"}
+                                                   {:value "other_finance" :label "Other Finance"}
+                                                   {:value "estate_agencies" :label "Estate agencies"}
+                                                   {:value "charity__social_care" :label "Charity & social care"}
+                                                   {:value "travel_agents" :label "Travel agents"}
+                                                   {:value "accounting_services" :label "Accounting services"}
+                                                   {:value "cleaning_services" :label "Cleaning services"}
+                                                   {:value "wholesale" :label "Wholesale"}
+                                                   {:value "heating__plumbing" :label "Heating & plumbing"}
+                                                   ]}
+
                                            {:id :highgrowth
                                             :type :checkboxes
                                             :label "Scaleups"
@@ -229,7 +264,7 @@
                                            {:id :latest-turnover
                                             :type :checkboxes
                                             :label "Turnover"
-                                            :visible false
+                                            :visible true
                                             :controls true
                                             :options [;; {:value "any" :label "Any" :filter nil}
                                                       {:value "min" :label "Less than £0.2 million" :filter {:range {"!latest_turnover" {:lt 200000}}}}
@@ -242,7 +277,7 @@
                          ;; base-filters AND combined with dynamic components
                          }
 
-   :dynamic-filter-description-components [:boundaryline :age :total-funding :sector :ds :hub :latest-turnover :highgrowth]
+   :dynamic-filter-description-components [:boundaryline :age :total-funding :sector :narrow-sector :ds :hub :latest-turnover :highgrowth :employee-count]
 
    :selection-filter-spec {:id :selection-filter
                            :components {:natural_id nil}
