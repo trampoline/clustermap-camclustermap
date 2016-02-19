@@ -2,17 +2,16 @@
   :description "FIXME: write this!"
   :url "http://example.com/FIXME"
 
-  :dependencies [[org.clojure/clojure "1.7.0"]
-                 [org.clojure/clojurescript "1.7.170" :scope "provided"]
+  :dependencies [[org.clojure/clojure "1.8.0"]
+                 [org.clojure/clojurescript "1.7.228" :scope "provided"]
                  [org.clojure/core.async "0.2.374" :scope "provided"]
                  [cljsjs/react "0.14.3-0"]
                  [cljsjs/react-dom "0.14.3-1"]
-                 [cljsjs/react-dom-server "0.14.3-0"]
                  [domina "1.0.3"]
                  [jayq "2.5.4"]
                  [org.omcljs/om "1.0.0-alpha21"]
-                 [prismatic/schema "1.0.4"]
-                 [sablono "0.5.3"]
+                 [prismatic/schema "1.0.5"]
+                 [sablono "0.6.2"]
                  [hiccups "0.3.0"]
                  [secretary "1.2.3"]
                  [com.andrewmcveigh/cljs-time "0.4.0"]
