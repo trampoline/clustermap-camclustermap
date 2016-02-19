@@ -14,6 +14,7 @@
                  [sablono "0.6.2"]
                  [hiccups "0.3.0"]
                  [secretary "1.2.3"]
+                 [cljsjs/bootstrap "3.3.5-0"]
                  [com.andrewmcveigh/cljs-time "0.4.0"]
                  [binaryage/devtools "0.4.1"]
                  [clustermap-components "0.1.0-SNAPSHOT"]
