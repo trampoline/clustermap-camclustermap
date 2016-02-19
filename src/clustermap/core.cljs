@@ -283,6 +283,12 @@
    :supporters-modal {:content (constantly "Supporters")
                       :action (fn [& _] (-> ($ "#page-supporters") .modal))}
 
+   :contact-modal {:content (constantly "Contact")
+                   :action (fn [& _] (-> ($ "#page-contact") .modal))}
+
+   :help-modal {:content (constantly "Help")
+                :action (fn [& _] (-> ($ "#page-help") .modal))}
+
    :dynamic-filter-description-components [:boundaryline :age :total-funding :sector :narrow-sector :ds :hub :latest-turnover :highgrowth :employee-count]
 
    :selection-filter-spec {:id :selection-filter
@@ -751,6 +757,16 @@
     :f action-link/action-link-component
     :target "supporters"
     :paths {:action-link [:supporters-modal]}}
+
+   {:name :contact-modal
+    :f action-link/action-link-component
+    :target "contact"
+    :paths {:action-link [:contact-modal]}}
+
+   {:name :help-modal
+    :f action-link/action-link-component
+    :target "help"
+    :paths {:action-link [:help-modal]}}
 
    {:name :company-close
     :f nav-button/nav-button-component
