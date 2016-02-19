@@ -4,6 +4,7 @@
   (:require
    [clojure.string :as str]
    [om.core :as om :include-macros true]
+   [jayq.core :refer [$]]
    [clustermap.api :as api]
    [clustermap.app :as app]
    [clustermap.filters :as filters]
@@ -276,6 +277,11 @@
 
                          ;; base-filters AND combined with dynamic components
                          }
+   :about-modal {:content (constantly "About")
+                 :action (fn [& _] (-> ($ "#page-about") .modal))}
+
+   :supporters-modal {:content (constantly "Supporters")
+                      :action (fn [& _] (-> ($ "#page-supporters") .modal))}
 
    :dynamic-filter-description-components [:boundaryline :age :total-funding :sector :narrow-sector :ds :hub :latest-turnover :highgrowth :employee-count]
 
@@ -735,6 +741,16 @@
    ;;  :f color-scale/color-scale-component
    ;;  :target "color-scale-component"
    ;;  :path [:map :controls :threshold-colors]}
+
+   {:name :about-modal
+    :f action-link/action-link-component
+    :target "about"
+    :paths {:action-link [:about-modal]}}
+
+   {:name :supporters-modal
+    :f action-link/action-link-component
+    :target "supporters"
+    :paths {:action-link [:supporters-modal]}}
 
    {:name :company-close
     :f nav-button/nav-button-component
