@@ -147,7 +147,7 @@
                    :boundarylines {}}
 
    :dynamic-filter-spec {:id :coll
-
+                         :open true
                          ;; dynamic components
                          :components {}
 
@@ -191,7 +191,7 @@
                                             :type :tag-checkboxes
                                             :label "Sector"
                                             :sorted false
-                                            :visible true
+                                            :visible false
                                             :controls true
                                             :tag-type "broad_12_sectors"
                                             :tags [
@@ -248,14 +248,14 @@
                                            {:id :highgrowth
                                             :type :checkboxes
                                             :label "Scaleups"
-                                            :visible true
+                                            :visible false
                                             :options [{:value "latest" :label "Scaleup companies" :filter scaleup-filter}
                                                       ]}
 
                                            {:id :employee-count
                                             :type :checkboxes
-                                            :label "Employees"
-                                            :visible true
+                                            :label "Employee size range"
+                                            :visible false
                                             :controls true
                                             :options [{:value "min" :label "1" :filter {:range {"!latest_employee_count" {:lte 1}}}}
                                                       {:value "min+" :label "2–9" :filter {:range {"!latest_employee_count" {:gt 1 :lte 9}}}}
@@ -264,8 +264,8 @@
 
                                            {:id :latest-turnover
                                             :type :checkboxes
-                                            :label "Turnover"
-                                            :visible true
+                                            :label "Turnover size range"
+                                            :visible false
                                             :controls true
                                             :options [;; {:value "any" :label "Any" :filter nil}
                                                       {:value "min" :label "Less than £0.2 million" :filter {:range {"!latest_turnover" {:lt 200000}}}}
@@ -302,11 +302,13 @@
                                :render-fn (fn [r] [[:div (:name r)]
                                                    [:div (:postcode r)]])
                                :col-headers  ["Name" "Post code"]
+
                                :click-fn (fn [r]
                                            (make-company-selection (:natural_id r))
                                            (app/navigate @app-instance "company"))
                                }
                     :query nil
+                    :placeholder "Company or postcode search"
                     :results nil}
 
    :company-name {:path [:name]}
