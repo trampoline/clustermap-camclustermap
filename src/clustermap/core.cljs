@@ -202,12 +202,12 @@
                                                    {:value "life_science_and_healthcare" :label "Life Science and Healthcare"}
                                                    {:value "manufacturing" :label "Manufacturing"}
                                                    {:value "other_business_services" :label "Other Business Services"}
-                                                   {:value "personal_services" :label "Personal services"}
+                                                   ;;{:value "personal_services" :label "Personal services"}
                                                    {:value "primary" :label "Primary"}
                                                    {:value "property_and_finance" :label "Property and finance"}
                                                    {:value "transport_and_travel" :label "Transport and travel"}
                                                    {:value "wholesale_and_retail_distribution" :label "Wholesale and retail distribution"}
-                                                   {:value "not_known" :label "Unknown"}
+                                                   ;;{:value "not_known" :label "Unknown"}
                                                    ]}
 
                                            {:id :narrow-sector
