@@ -245,6 +245,31 @@
                                                    {:value "heating__plumbing" :label "Heating & plumbing"}
                                                    ]}
 
+                                           ;; ki is a combo of broad and narrow so use filters
+                                           {:id :ki-sector
+                                            :type :checkboxes
+                                            :label "Knowledge Intensive Sectors"
+                                            :sorted false
+                                            :visible false
+                                            :controls true
+                                            :options [{:value "information_technology_and_telecoms" :label "Information Technology and Telecoms"
+                                                       :filter {:nested {:path "?tags"
+                                                                         :filter {:bool {:must [{:term {"type" "broad_12_sectors"}}
+                                                                                                {:term {"tag" "information_technology_and_telecoms"}}]}}}}}
+                                                      {:value "life_science_and_healthcare" :label "Life Science and Healthcare"
+                                                       :filter {:nested {:path "?tags"
+                                                                         :filter {:bool {:must [{:term {"type" "broad_12_sectors"}}
+                                                                                                {:term {"tag" "life_science_and_healthcare"}}]}}}}}
+                                                      {:value "knowledge_intensive_professional_services" :label "Knowledge Intensive Professional Services"
+                                                       :filter {:nested {:path "?tags"
+                                                                         :filter {:bool {:must [{:term {"type" "broad_12_sectors"}}
+                                                                                                {:term {"tag" "knowledge_intensive_professional_services"}}]}}}}}
+                                                      {:value "hightech_manufacturing" :label "High-tech Manufacturing"
+                                                       :filter {:nested {:path "?tags"
+                                                                         :filter {:bool {:must [{:term {"type" "narrow_sectors"}}
+                                                                                                {:term {"tag" "hightech_manufacturing"}}]}}}}}
+                                                      ]}
+
                                            {:id :highgrowth
                                             :type :checkboxes
                                             :label "Scaleups"
