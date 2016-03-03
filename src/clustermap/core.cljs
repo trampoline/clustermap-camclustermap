@@ -326,7 +326,7 @@
                                              (api/company-search))
                                :render-fn (fn [r] [[:div (:name r)]
                                                    [:div (:postcode r)]])
-                               :col-headers  ["Name" "Post code"]
+                               :col-headers  ["Name" "Postcode"]
 
                                :click-fn (fn [r]
                                            (make-company-selection (:natural_id r))
