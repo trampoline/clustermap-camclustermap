@@ -294,8 +294,8 @@
                                             :controls true
                                             :options [;; {:value "any" :label "Any" :filter nil}
                                                       {:value "min" :label "Less than £0.2 million" :filter {:range {"!latest_turnover" {:lt 200000}}}}
-                                                      {:value "low" :label "£0.2 – 1 million" :filter {:range {"!latest_turnover" {:gte 200000 :lt 1000000}}}}
-                                                      {:value "lowmid" :label "£1 – 35 million" :filter {:range {"!latest_turnover" {:gte 10000000 :lt 35000000}}}}
+                                                      {:value "low" :label "£0.2 – 1 million" :filter {:range {"!latest_turnover" {:gte 200000 :lt 1e6}}}}
+                                                      {:value "lowmid" :label "£1 – 35 million" :filter {:range {"!latest_turnover" {:gte 1e6 :lt 35000000}}}}
                                                       {:value "highest" :label "More than £35 million" :filter {:range {"!latest_turnover" {:gte 35000000}}}}
                                                       ]}
                                            ]
@@ -739,6 +739,11 @@
                                                (filters/reset-filter (get-in @(get-app-state-atom) [:dynamic-filter-spec]))))))}
    })
 
+(def initial-state* (assoc initial-state
+                           :mini-map
+                           (:map (update-in initial-state [:map :controls :location]
+                                            select-keys [:cluster :location-attr :marker-opts :marker-render-fn :item-render-fn]))))
+
 
 (def components
   [
@@ -938,7 +943,9 @@
     :paths {:metadata [:company-info]
             :turnover-timeline [:company-turnover-timeline]
             :employment-timeline [:company-employment-timeline]
-            :filter-spec [:selection-filter-spec :composed :all]}}
+            :filter-spec [:selection-filter-spec :composed :all]
+            :map-state [:mini-map]
+            :filter [:dynamic-filter-spec :composed :all]}}
 
    ]
   )
@@ -978,7 +985,7 @@
 
 (defn init
   []
-  (app/start-or-restart-app app-instance initial-state components (create-app-service)))
+  (app/start-or-restart-app app-instance initial-state* components (create-app-service)))
 
 (cond
 

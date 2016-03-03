@@ -11,6 +11,7 @@
             [clustermap.formats.number :as num :refer [div! *! -! +!]]
             [clustermap.formats.money :as money]
             [clustermap.formats.time :as time]
+            [clustermap.components.map :as map]
             [clustermap.components.timeline-chart :as timeline-chart]))
 
 (defn render-metadata-row
@@ -37,8 +38,9 @@
    {:keys [title-field fields] :as controls}
    filter-spec
    turnover-timeline
-   employment-timeline]
-  (.log js/console (clj->js ["RECORD" record]))
+   employment-timeline
+   map-state]
+  (.log js/console ["RECORD" record])
   (html
    [:div.panel-grid-container
     [:div.panel-grid
@@ -117,8 +119,14 @@
                      [:td (:name d)]
                      [:td (time/format-date (:appointment_date d))]
                      [:td (time/format-date (:resignation_date d))]
-                     ])))]]]]]
+                     ])))]]]]
 
+      [:div.panel
+       [:div.panel-body
+        [:div.chart-heading
+         [:h4.stat-title "Map"]]
+        [:div.mini-map
+         (om/build map/minimap-component {:map-state map-state})]]]]
 
      ]]
    ;; [:div.box.box-first
@@ -137,10 +145,11 @@
       size :size
       :as controls} :controls
      :as metadata} :metadata
-     turnover-timeline :turnover-timeline
-     employment-timeline :employment-timeline
-      filter-spec :filter-spec
-      :as props}
+    turnover-timeline :turnover-timeline
+    employment-timeline :employment-timeline
+    filter-spec :filter-spec
+    map-state :map-state
+    :as props}
    owner]
 
   (reify
@@ -150,7 +159,7 @@
 
     om/IRender
     (render [_]
-      (render* record controls filter-spec turnover-timeline employment-timeline))
+      (render* record controls filter-spec turnover-timeline employment-timeline map-state))
 
     om/IWillUpdate
     (will-update [_
@@ -161,8 +170,21 @@
                      next-size :size
                      :as next-controls} :controls
                     :as next-metadata} :metadata
-                    next-filter-spec :filter-spec}
+                   next-filter-spec :filter-spec}
                   {fetch-metadata-fn :fetch-metadata-fn}]
+
+      (when next-record ;; create a single point for this company
+        (let [point-data {:count 1
+                          :records {(keyword (pr-str (:location next-record)))
+                                    {:location (:location next-record)
+                                     :records [{:natural_id (:natural_id next-record)
+                                                :location (:location next-record)
+                                                :name (:name next-record )
+                                                :latest_turnover (:latest_turnover next-record)
+                                                :latest_employee_count (:latest_employee_count next-record)
+                                                }]}}}]
+          (js/console.debug point-data)
+          (om/update! map-state [:point-data] point-data)))
 
       (when (or (not next-record)
                 (not= next-controls controls)
@@ -174,5 +196,5 @@
                                                           next-filter-spec
                                                           next-sort-spec
                                                           next-size))]
-            (.log js/console (clj->js ["COMPANY-INFO-DATA" metadata-data]))
+            (.log js/console  ["COMPANY-INFO-DATA" metadata-data])
             (om/update! metadata [:record] (some-> metadata-data :records first))))))))
