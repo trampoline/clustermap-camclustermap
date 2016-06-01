@@ -34,10 +34,19 @@
 
 ## using boot
 
+### developing
 
     boot dev target -d cljs-out/none
-
 
 in clustermap-components:
 
     boot auto-install
+
+To get a cljs-repl connect to nrepl in your editor and:
+
+    (start-repl)
+
+
+### production
+
+    boot production build target -d cljs-out/advanced
