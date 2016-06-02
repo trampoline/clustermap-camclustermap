@@ -173,6 +173,9 @@
                    next-filter-spec :filter-spec}
                   {fetch-metadata-fn :fetch-metadata-fn}]
 
+      (when-let [el (js/document.getElementById "data-col")]
+        (set! (.-scrollTop el) 0))
+
       (when next-record ;; create a single point for this company
         (let [point-data {:count 1
                           :records {(keyword (pr-str (:location next-record)))
