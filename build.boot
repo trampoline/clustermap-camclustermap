@@ -9,24 +9,14 @@
                  [com.cemerick/piggieback "0.2.1" :scope "test"]
                  [org.clojure/tools.nrepl "0.2.12" :scope "test"]
 
-                 [org.clojure/clojurescript "1.7.228"]
+                 [org.clojure/clojurescript "1.9.14"]
                  [org.clojure/core.async "0.2.374"]
-                 [com.taoensso/timbre "4.3.0-RC1"]
-                 [org.omcljs/om "1.0.0-alpha30"]
+                 [com.taoensso/timbre "4.3.1"]
+                 [org.omcljs/om "1.0.0-alpha32"]
                  [binaryage/devtools "0.5.2"]
                  [weasel "0.7.0" :scope "test"]
 
-                 [cljsjs/react "0.14.3-0"]
-                 [cljsjs/react-dom "0.14.3-1"]
-                 [domina "1.0.3"]
-                 [jayq "2.5.4"]
-                 [prismatic/schema "1.0.5"]
-                 [sablono "0.6.2"]
-                 [hiccups "0.3.0"]
-                 [secretary "1.2.3"]
-                 [cljsjs/bootstrap "3.3.5-0"]
-                 [clustermap-components "0.1.0-SNAPSHOT"]
-                 [com.andrewmcveigh/cljs-time "0.4.0"]
+                 [clustermap-components "0.2.0-SNAPSHOT"]
                  ])
 
 (require
@@ -44,7 +34,7 @@
 (deftask run []
   (comp ;;(serve)
    (watch)
-   (checkout :dependencies ['[clustermap-components "0.1.0-SNAPSHOT"]])
+   (checkout :dependencies ['[clustermap-components "0.2.0-SNAPSHOT"]])
    (cljs-repl)
    (reload)
    (build)))

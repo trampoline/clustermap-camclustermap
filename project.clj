@@ -1,4 +1,5 @@
 (defproject clustermap-bvca-cljs "0.1.0-SNAPSHOT"
+  ;; Lein DEPRECATED: use build.boot
   :description "FIXME: write this!"
   :url "http://example.com/FIXME"
 
