@@ -3,6 +3,7 @@
                    [cljs.core.async.macros :refer [go]])
   (:require
    [clojure.string :as str]
+   [devtools.core :as devtools]
    [om.core :as om :include-macros true]
    [jayq.core :refer [$]]
    [clustermap.api :as api]
@@ -37,6 +38,7 @@
 
 ;; assume we are in dev-mode if there is repl support
 (def ^:private dev-mode (some-> js/window .-config .-repl))
+(if ^boolean js/goog.DEBUG (devtools/install!))
 
 ;; the IApp object
 (def ^:private app-instance (atom nil))
