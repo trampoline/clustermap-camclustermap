@@ -316,7 +316,7 @@
    :help-modal {:content (constantly "Help")
                 :action (fn [& _] (-> ($ "#page-help") .modal))}
 
-   :dynamic-filter-description-components [:boundaryline :age :total-funding :sector :narrow-sector :ds :hub :latest-turnover :highgrowth :employee-count]
+   :dynamic-filter-description-components [:boundaryline :age :total-funding :sector :narrow-sector :ds :hub :latest-turnover :highgrowth :employee-count :ki-sector]
 
    :selection-filter-spec {:id :selection-filter
                            :components {:natural_id nil}
