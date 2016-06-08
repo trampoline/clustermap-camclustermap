@@ -212,40 +212,40 @@
                                                    ;;{:value "not_known" :label "Unknown"}
                                                    ]}
 
-                                           {:id :narrow-sector
-                                            :type :tag-checkboxes
-                                            :label "Narrow Sector"
-                                            :sorted true
-                                            :visible false
-                                            :controls true
-                                            :tag-type "narrow_sectors"
-                                            :tags [
-                                                   {:value "quantity_surveyors" :label "Quantity surveyors"}
-                                                   {:value "information_services" :label "Information services"}
-                                                   {:value "tv__video_production" :label "TV & video production"}
-                                                   {:value "data_processing__hosting" :label "Data processing & hosting"}
-                                                   {:value "hightech_manufacturing" :label "High-tech Manufacturing"}
-                                                   {:value "public_relations" :label "Public relations"}
-                                                   {:value "transport_leasing" :label "Transport leasing"}
-                                                   {:value "other_construction" :label "Other construction"}
-                                                   {:value "hotels_pubs_and_restaurants" :label "Hotels, pubs and restaurants"}
-                                                   {:value "plastering_joinery_decoration" :label "Plastering, joinery decoration"}
-                                                   {:value "medlowtech_manufacturing" :label "Med-low-tech manufacturing"}
-                                                   {:value "primary" :label "Primary"}
-                                                   {:value "architects" :label "Architects"}
-                                                   {:value "lowtech_manufacturing" :label "Low-tech manufacturing"}
-                                                   {:value "utilities" :label "Utilities"}
-                                                   {:value "kis_professional_business_services" :label "KIS Professional Business Services"}
-                                                   {:value "developer__builder" :label "Developer / Builder"}
-                                                   {:value "other_finance" :label "Other Finance"}
-                                                   {:value "estate_agencies" :label "Estate agencies"}
-                                                   {:value "charity__social_care" :label "Charity & social care"}
-                                                   {:value "travel_agents" :label "Travel agents"}
-                                                   {:value "accounting_services" :label "Accounting services"}
-                                                   {:value "cleaning_services" :label "Cleaning services"}
-                                                   {:value "wholesale" :label "Wholesale"}
-                                                   {:value "heating__plumbing" :label "Heating & plumbing"}
-                                                   ]}
+                                           #_{:id :narrow-sector
+                                              :type :tag-checkboxes
+                                              :label "Narrow Sector"
+                                              :sorted true
+                                              :visible false
+                                              :controls true
+                                              :tag-type "narrow_sectors"
+                                              :tags [
+                                                     {:value "quantity_surveyors" :label "Quantity surveyors"}
+                                                     {:value "information_services" :label "Information services"}
+                                                     {:value "tv__video_production" :label "TV & video production"}
+                                                     {:value "data_processing__hosting" :label "Data processing & hosting"}
+                                                     {:value "hightech_manufacturing" :label "High-tech Manufacturing"}
+                                                     {:value "public_relations" :label "Public relations"}
+                                                     {:value "transport_leasing" :label "Transport leasing"}
+                                                     {:value "other_construction" :label "Other construction"}
+                                                     {:value "hotels_pubs_and_restaurants" :label "Hotels, pubs and restaurants"}
+                                                     {:value "plastering_joinery_decoration" :label "Plastering, joinery decoration"}
+                                                     {:value "medlowtech_manufacturing" :label "Med-low-tech manufacturing"}
+                                                     {:value "primary" :label "Primary"}
+                                                     {:value "architects" :label "Architects"}
+                                                     {:value "lowtech_manufacturing" :label "Low-tech manufacturing"}
+                                                     {:value "utilities" :label "Utilities"}
+                                                     {:value "kis_professional_business_services" :label "KIS Professional Business Services"}
+                                                     {:value "developer__builder" :label "Developer / Builder"}
+                                                     {:value "other_finance" :label "Other Finance"}
+                                                     {:value "estate_agencies" :label "Estate agencies"}
+                                                     {:value "charity__social_care" :label "Charity & social care"}
+                                                     {:value "travel_agents" :label "Travel agents"}
+                                                     {:value "accounting_services" :label "Accounting services"}
+                                                     {:value "cleaning_services" :label "Cleaning services"}
+                                                     {:value "wholesale" :label "Wholesale"}
+                                                     {:value "heating__plumbing" :label "Heating & plumbing"}
+                                                     ]}
 
                                            ;; ki is a combo of broad and narrow so use filters
                                            {:id :ki-sector
@@ -272,12 +272,12 @@
                                                                                                 {:term {"tag" "hightech_manufacturing"}}]}}}}}
                                                       ]}
 
-                                           {:id :highgrowth
-                                            :type :checkboxes
-                                            :label "Scaleups"
-                                            :visible false
-                                            :options [{:value "latest" :label "Scaleup companies" :filter scaleup-filter}
-                                                      ]}
+                                           #_{:id :highgrowth
+                                              :type :checkboxes
+                                              :label "Scaleups"
+                                              :visible false
+                                              :options [{:value "latest" :label "Scaleup companies" :filter scaleup-filter}
+                                                        ]}
 
                                            {:id :employee-count
                                             :type :checkboxes
