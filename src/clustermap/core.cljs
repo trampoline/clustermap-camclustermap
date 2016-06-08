@@ -975,7 +975,8 @@
         {:fetch-boundarylines-fn (partial bl/get-or-fetch-best-boundarylines (app/get-state app) :boundarylines)
          :get-cached-boundaryline-fn (partial bl/get-cached-boundaryline (app/get-state app) :boundarylines)
          :point-in-boundarylines-fn (partial bl/point-in-boundarylines (app/get-state app) :boundarylines :uk_boroughs)
-         :path-marker-click-fn make-boundaryline-selection})
+         :path-marker-click-fn make-boundaryline-selection
+         :search-chan (chan)})
 
       (destroy [this app]
         (.log js/console "DESTROY APP!"))
