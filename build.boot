@@ -9,12 +9,14 @@
                  [com.cemerick/piggieback "0.2.1" :scope "test"]
                  [org.clojure/tools.nrepl "0.2.12" :scope "test"]
 
-                 [org.clojure/clojurescript "1.9.14"]
+                 [org.clojure/clojurescript "1.9.36"]
                  [org.clojure/core.async "0.2.374"]
                  [com.taoensso/timbre "4.3.1"]
-                 [org.omcljs/om "1.0.0-alpha32"]
-                 [binaryage/devtools "0.5.2"]
+                 [org.omcljs/om "1.0.0-alpha36"]
+                 [binaryage/devtools "0.6.1"]
                  [weasel "0.7.0" :scope "test"]
+                 [cljsjs/react "15.1.0-0"]
+                 [cljsjs/react-dom "15.1.0-0"]
 
                  [clustermap-components "0.2.0-SNAPSHOT"]
                  ])
