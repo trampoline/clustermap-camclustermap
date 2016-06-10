@@ -717,13 +717,7 @@
    :view :trends
 
    :company-close {:text "Close"
-                   :action (fn [e]
-                             (app/navigate @app-instance "main")
-                             ;; hack to avoid flash of old data
-                             (swap! (get-app-state-atom)
-                                    assoc-in
-                                    [:company-info :record]
-                                    {:name ""}))
+                   :target-view "main"
                    :class "btn btn-primary"}
 
    :reset-map-view {:text "Reset view"
@@ -809,9 +803,9 @@
     :paths {:action-link [:help-modal]}}
 
    {:name :company-close
-    :f action-button/action-button-component
+    :f nav-button/nav-button-component
     :target "company-close"
-    :paths {:action-button [:company-close]}}
+    :paths {:nav-button [:company-close]}}
 
    {:name :reset-map-view
     :f action-button/action-button-component
