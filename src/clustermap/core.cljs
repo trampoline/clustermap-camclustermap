@@ -133,6 +133,12 @@
     (< n 0)  [:i.icon-negative]
     :else nil))
 
+(defn company-type-from-filter
+  "Pull out the cambridge_ahead_code tag from the ES filter"
+  [filter]
+  (some #(#{"cambridge_based" "cambridge_active" "non-corporate"}
+          (get-in % [:nested :filter :bool :must 1 :term "tag"]))
+        (get-in filter [:bool :must])))
 
 (def initial-state
   {:boundarylines {
@@ -189,6 +195,17 @@
 
                          ;; specifications for dynamic components
                          :component-specs [
+                                           {:id :company-type
+                                            :type :tag
+                                            :label "Company type"
+                                            :sorted false
+                                            :visible true
+                                            :default "cambridge_based"
+                                            :tag-type "cambridge_ahead_code"
+                                            :tags [{:value "cambridge_based" :label "Cambridge based"}
+                                                   {:value "cambridge_active" :label "Cambridge active"}
+                                                   {:value "non-corporate" :label "Non-corporate"}]}
+
                                            {:id :sector
                                             :type :tag-checkboxes
                                             :label "Sector"
@@ -506,21 +523,28 @@
                                                :index-type "company"
                                                :variables [{:key :?counter
                                                             :metric :viewfilter_doc_count
-                                                            :label "Companies"
+                                                            :label (fn [{:keys [filt]}]
+                                                                     (case (company-type-from-filter filt)
+                                                                       "cambridge_based" "Cambridge-based companies"
+                                                                       "cambridge_active" "Cambridge-active companies"
+                                                                       "non-corporate" "Non-coporate laboratories"))
                                                             :render-fn (fn [v] (num/mixed v))}
                                                            {:key :!latest_turnover
                                                             :metric :sum
                                                             :label "Total turnover"
-                                                            :render-fn (fn [v] (num/mixed v {:curr "£"}))}
+                                                            :render-fn (fn [v] (if v
+                                                                                 (num/mixed v {:curr "£"})
+                                                                                 "N/a"))}
                                                            {:key :!latest_turnover_delta
                                                             :belongs-to :!latest_turnover
                                                             :metric :sum
                                                             :label "Turnover change"
                                                             :value-fn (fn [btv v] (* 100 (/ v btv)))
-                                                            :render-fn (fn [v] [:div.stat-change
-                                                                                (sign-icon v)
-                                                                                (num/mixed v)
-                                                                                "%"])}
+                                                            :render-fn (fn [v] (when (and v (not (js/isNaN v)))
+                                                                                 [:div.stat-change
+                                                                                  (sign-icon v)
+                                                                                  (num/mixed v)
+                                                                                  "%"]))}
                                                            {:key :!latest_employee_count
                                                             :metric :sum
                                                             :label "Total employees"
