@@ -1000,6 +1000,8 @@
          :get-cached-boundaryline-fn (partial bl/get-cached-boundaryline (app/get-state app) :boundarylines)
          :point-in-boundarylines-fn (partial bl/point-in-boundarylines (app/get-state app) :boundarylines :uk_boroughs)
          :path-marker-click-fn make-boundaryline-selection
+         :data-available-fn (fn [filter-spec]
+                              (not (= "non_corporate" (company-type-from-filter filter-spec)) ))
          :search-chan (chan)})
 
       (destroy [this app]
