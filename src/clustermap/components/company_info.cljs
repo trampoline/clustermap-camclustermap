@@ -103,7 +103,7 @@
       [:div.panel
        [:div.panel-body
         [:h3 "Directors"]
-        [:table.responsive
+        [:.responsive
          [:table.table
           [:thead
            [:tr [:th "Name"] [:th "Appointment date"] [:th "Resignation date"]]]

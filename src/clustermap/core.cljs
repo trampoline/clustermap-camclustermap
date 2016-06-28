@@ -38,7 +38,7 @@
 
 ;; assume we are in dev-mode if there is repl support
 (def ^:private dev-mode (some-> js/window .-config .-repl))
-(if ^boolean js/goog.DEBUG (devtools/install!))
+(if ^boolean js/goog.DEBUG (devtools/install! :all))
 
 ;; the IApp object
 (def ^:private app-instance (atom nil))
@@ -136,7 +136,7 @@
 (defn company-type-from-filter
   "Pull out the cambridge_ahead_code tag from the ES filter"
   [filter]
-  (some #(#{"cambridge_based" "cambridge_active" "non-corporate"}
+  (some #(#{"cambridge_based" "cambridge_active" "non_corporate"}
           (get-in % [:nested :filter :bool :must 1 :term "tag"]))
         (get-in filter [:bool :must])))
 
@@ -204,7 +204,7 @@
                                             :tag-type "cambridge_ahead_code"
                                             :tags [{:value "cambridge_based" :label "Cambridge based"}
                                                    {:value "cambridge_active" :label "Cambridge active"}
-                                                   {:value "non-corporate" :label "Non-corporate"}]}
+                                                   {:value "non_corporate" :label "Non-corporate"}]}
 
                                            {:id :sector
                                             :type :tag-checkboxes
@@ -330,7 +330,7 @@
    :contact-modal {:content (constantly "Contact")
                    :action (fn [& _] (-> ($ "#page-contact") .modal))}
 
-   :help-modal {:content (constantly "Help")
+   :help-modal {:content (constantly "Demo/FAQs")
                 :action (fn [& _] (-> ($ "#page-help") .modal))}
 
    :dynamic-filter-description-components [:boundaryline :age :total-funding :sector :narrow-sector :ds :hub :latest-turnover :highgrowth :employee-count :ki-sector]
@@ -440,7 +440,7 @@
                                                   [:div.name (get i :name)]
                                                   [:div.metrics
                                                    [:div.metric.metric-1
-                                                    [:span.name "Tur"] [:span.value (num/compact (:latest_turnover i))]]
+                                                    [:span.name "T/o"] [:span.value (num/compact (:latest_turnover i))]]
                                                    [:div.metric.metric-2
                                                     [:span.name "Emp"] [:span.value (num/compact (:latest_employee_count i))]]]])
                                :item-click-fn (fn [r e]
@@ -527,7 +527,8 @@
                                                                      (case (company-type-from-filter filt)
                                                                        "cambridge_based" "Cambridge-based companies"
                                                                        "cambridge_active" "Cambridge-active companies"
-                                                                       "non-corporate" "Non-coporate laboratories"))
+                                                                       "non_corporate" "Non-coporate laboratories"
+                                                                       (do (js/console.warn "no matching case") "[invalid filter]")))
                                                             :render-fn (fn [v] (num/mixed v))}
                                                            {:key :!latest_turnover
                                                             :metric :sum
@@ -574,7 +575,7 @@
                                  ;; {:key :!latest_accounts_date :label "Filing date" :render-fn #(time/format-date %)}
                                  {:key :!latest_turnover
                                   :sortable true
-                                  :label "Turnover"
+                                  :label "Turnover (£)"
                                   :right-align true
                                   :render-fn #(num/mixed %)}
                                  {:key :!latest_turnover_delta
