@@ -285,9 +285,12 @@
                                                                          :filter {:bool {:must [{:term {"type" "broad_12_sectors"}}
                                                                                                 {:term {"tag" "knowledge_intensive_professional_services"}}]}}}}}
                                                       {:value "hightech_manufacturing" :label "High-tech Manufacturing"
-                                                       :filter {:nested {:path "?tags"
-                                                                         :filter {:bool {:must [{:term {"type" "narrow_sectors"}}
-                                                                                                {:term {"tag" "hightech_manufacturing"}}]}}}}}
+                                                       :filter {:bool {:must [{:nested {:path "?tags"
+                                                                                        :filter {:bool {:must [{:term {"type" "narrow_sectors"}}
+                                                                                                               {:term {"tag" "hightech_manufacturing"}}]}}}}
+                                                                              {:nested {:path "?tags"
+                                                                                        :filter {:bool {:must [{:term {"type" "broad_12_sectors"}}
+                                                                                                               {:term {"tag" "manufacturing"}}]}}}}]}}}
                                                       ]}
 
                                            #_{:id :highgrowth
