@@ -33,6 +33,7 @@
    [clustermap.components.action-button :as action-button]
    [clustermap.components.action-link :as action-link]
    [clustermap.boundarylines :as bl]
+   [clustermap.filter-values :as filter-values]
    [cljs.core.async :refer [chan <! put! sliding-buffer >!]]
    [schema.core :as s :refer-macros [defschema]]))
 
@@ -77,21 +78,6 @@
 ;; was this a scaleup a year previously
 (def previous-scaleup-filter
   (scaleup-rank-filter 2))
-
-(def wireless-company-nos
-  "Hardcoded as haven't added to tags yet"
-  ["08258639" "03369488" "OC302288" "01041448" "01608562" "08852416" "02305889" "07407204" "05964675" "03957352" "07509631"
-   "05822974" "06779286" "07559453" "03682604" "03990977" "08691522" "08007990" "04121681" "08413230" "06786351" "03400157"
-   "06340524" "05530065" "04378853" "05783558" "03699427" "07944921" "04505142" "01149346" "04324457" "07371283" "06127832"
-   "01211979" "05262134" "05444634" "04934600" "06413494" "06133936" "05481183" "02844780" "04388615" "OC343503" "08226456"
-   "01036298" "05561843" "01900335" "07187383" "06977690" "05456926" "04336785" "03568521" "07285904" "08315238" "08398544"
-   "08802672" "03879840" "03452194" "01655142" "08345089" "06266510" "02051460" "08940395" "04818441" "03436476" "04776343"
-   "01705804" "04341237" "05278180" "03875762" "06425174" "02187609" "04458751" "03222948" "06960998" "02170755" "06895184"
-   "05671361" "03400152" "03835617" "05782908" "07578399" "06529916" "02548782" "06952675" "07062842" "05943341" "08860375"
-   "05285665" "08780601" "04554942" "03280869" "08294262" "05523420" "06347854" "05682551" "07860012" "06917673" "04353801"
-   "05386079" "06764280" "05494036" "07637807" "OC304065" "05903727" "01471587" "01743099" "02723534" "OC343273" "OC326165"
-   "OC303675" "04213838" "03277793" "04587255" "05766973" "07681088" "08812569" "02312905" "05038430" "OC335375" "04220106"
-   "08692447" "01819989" "02415578" "03908042" "04302194" "00446897" "04757301" "02382161" "06004939" "04266655" "00854631"])
 
 (defn boundaryline-filter
   [boundaryline-id]
@@ -308,12 +294,6 @@
                                                                                                                {:term {"tag" "manufacturing"}}]}}}}]}}}
                                                       ]}
 
-                                           #_{:id :highgrowth
-                                              :type :checkboxes
-                                              :label "Scaleups"
-                                              :visible false
-                                              :options [{:value "latest" :label "Scaleup companies" :filter scaleup-filter}
-                                                        ]}
                                            {:id :networks
                                             :type :checkboxes
                                             :label "Networks"
@@ -321,8 +301,22 @@
                                             :visible false
                                             :controls true
                                             :options [{:value "cambridge_wireless" :label "Cambridge Wireless"
-                                                       :filter {:bool {:should (mapv (fn [id] {:term {"?natural_id" id}}) wireless-company-nos)}}}]}
+                                                       :filter {:bool {:should (mapv (fn [id] {:term {"?natural_id" id}})
+                                                                                     filter-values/wireless-company-nos)}}}]}
 
+
+                                           {:id :highgrowth
+                                            :type :checkboxes
+                                            :label "Scaleups"
+                                            :visible false
+                                            :options [#_{:value "latest" :label "Scaleup companies" :filter scaleup-filter}
+                                                      {:value "turnover" :label "Turnover"
+                                                       :filter {:bool {:should (mapv (fn [id] {:term {"?natural_id" id}})
+                                                                                     filter-values/upscaler-turnover-company-nos)}}}
+                                                      {:value "employment" :label "Employment"
+                                                       :filter {:bool {:should (mapv (fn [id] {:term {"?natural_id" id}})
+                                                                                     filter-values/upscaler-employment-company-nos)}}}
+                                                      ]}
 
                                            {:id :employee-count
                                             :type :checkboxes
