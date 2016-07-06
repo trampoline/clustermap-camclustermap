@@ -200,11 +200,12 @@
                                             :label "Company type"
                                             :sorted false
                                             :visible true
+                                            :chooser-type :radio
                                             :default "cambridge_based"
                                             :tag-type "cambridge_ahead_code"
-                                            :tags [{:value "cambridge_based" :label "Cambridge based"}
-                                                   {:value "cambridge_active" :label "Cambridge active"}
-                                                   {:value "non_corporate" :label "Non-corporate"}]}
+                                            :tags [{:value "cambridge_based" :label "Cambridge-based"}
+                                                   {:value "cambridge_active" :label "Cambridge-active"}
+                                                   {:value "non_corporate" :label "Non-corporate KI"}]}
 
                                            {:id :sector
                                             :type :tag-checkboxes
