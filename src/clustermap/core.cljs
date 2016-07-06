@@ -527,8 +527,8 @@
                                                                      (case (company-type-from-filter filt)
                                                                        "cambridge_based" "Cambridge-based companies"
                                                                        "cambridge_active" "Cambridge-active companies"
-                                                                       "non_corporate" "Non-coporate laboratories"
-                                                                       (do (js/console.warn "no matching case") "[invalid filter]")))
+                                                                       "non_corporate" "Non-corporate KI laboratories"
+                                                                       "ALL: Companies and Non-corporate labs"))
                                                             :render-fn (fn [v] (num/mixed v))}
                                                            {:key :!latest_turnover
                                                             :metric :sum
