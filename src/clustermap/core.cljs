@@ -882,8 +882,12 @@
          :get-cached-boundaryline-fn (partial bl/get-cached-boundaryline (app/get-state app) :boundarylines)
          :point-in-boundarylines-fn (partial bl/point-in-boundarylines (app/get-state app) :boundarylines :uk_boroughs)
          :path-marker-click-fn make-boundaryline-selection
-         :data-available-fn (fn [filter-spec]
-                              (not (= "non_corporate" (company-type-from-filter filter-spec)) ))
+         :data-available-fn (fn [filter-spec metric-type]
+                              ;; handle "turnover" :!turnover
+                              (case (company-type-from-filter filter-spec)
+                                "non_corporate" (not (str/includes? (str metric-type) "turnover"))
+                                "cambridge_active" (str/includes? (str metric-type) "counter")
+                                true))
          :search-chan (chan)})
 
       (destroy [this app]
