@@ -429,16 +429,17 @@
                                                            {:key :!latest_employee_count
                                                             :metric :sum
                                                             :label "Total employees"
-                                                            :render-fn (fn [v] (num/mixed v))}
+                                                            :render-fn (fn [v] (if v (num/mixed v) "N/a"))}
                                                            {:key :!latest_employee_count_delta
                                                             :belongs-to :!latest_employee_count
                                                             :metric :sum
                                                             :label "Employment change"
                                                             :value-fn (fn [btv v] (* 100 (/ v btv)))
-                                                            :render-fn (fn [v] [:div.stat-change
-                                                                                (sign-icon v)
-                                                                                (num/mixed v)
-                                                                                "%"])}
+                                                            :render-fn (fn [v] (when (and v (not (js/isNaN v)))
+                                                                                 [:div.stat-change
+                                                                                  (sign-icon v)
+                                                                                  (num/mixed v)
+                                                                                  "%"]))}
                                                            ]}}
                     :summary-stats nil
                     }
