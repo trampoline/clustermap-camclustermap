@@ -12,6 +12,7 @@
             [clustermap.formats.money :as money]
             [clustermap.formats.time :as time]
             [clustermap.components.map :as map]
+            [clustermap.util :as util :refer [pp]]
             [clustermap.components.timeline-chart :as timeline-chart]))
 
 (defn render-metadata-row
@@ -77,26 +78,32 @@
       ]
 
      [:div.panel-row
-
-      [:div.panel
-       [:div.panel-body
-        [:div.chart-heading
-         [:h4.stat-title "Turnover"]
-         [:div.stat-amount [:small "£"] (num/mixed (:latest_turnover record))]
-         (stat-change (:latest_turnover record) (:latest_turnover_delta record))]
-        [:div.chart-container-lg
-         (om/build timeline-chart/timeline-chart {:timeline-chart turnover-timeline
-                                                  :filter-spec filter-spec})]]]
-
-      [:div.panel
-       [:div.panel-body
-        [:div.chart-heading
-         [:h4.stat-title "Employment"]
-         [:div.stat-amount (num/mixed (:latest_employee_count record))]
-         (stat-change (:latest_employee_count record) (:latest_employee_count_delta record))]
-        [:div.chart-container-lg
-         (om/build timeline-chart/timeline-chart {:timeline-chart employment-timeline
-                                                  :filter-spec filter-spec})]]]
+      (let [show (= "cambridge_based"
+                    (first (get-in record [:tagtypes :cambridge_ahead_code])))]
+        [:div.panel
+         [:div.panel-body
+          [:div.chart-heading
+           [:h4.stat-title "Turnover"]
+           [:div {:style (util/display (not show))} "Data not available"]
+           [:span {:style (util/display show)}
+            [:div.stat-amount [:small "£"] (num/mixed (:latest_turnover record))]
+            (stat-change (:latest_turnover record) (:latest_turnover_delta record))]]
+          [:div.chart-container-lg {:style (util/display show)}
+           (om/build timeline-chart/timeline-chart {:timeline-chart turnover-timeline
+                                                    :filter-spec filter-spec})]]])
+      (let [show (not= "cambridge_active"
+                       (first (get-in record [:tagtypes :cambridge_ahead_code])))]
+        [:div.panel
+         [:div.panel-body
+          [:div.chart-heading
+           [:h4.stat-title "Employment"]
+           [:div {:style (util/display (not show))} "Data not available"]
+           [:span {:style (util/display show)}
+            [:div.stat-amount (num/mixed (:latest_employee_count record))]
+            (stat-change (:latest_employee_count record) (:latest_employee_count_delta record))]]
+          [:div.chart-container-lg {:style (util/display show)}
+           (om/build timeline-chart/timeline-chart {:timeline-chart employment-timeline
+                                                    :filter-spec filter-spec})]]])
       ]
 
      [:div.panel-row
