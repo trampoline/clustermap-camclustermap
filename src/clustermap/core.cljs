@@ -5,6 +5,7 @@
    [clojure.string :as str]
    [devtools.core :as devtools]
    [om.core :as om :include-macros true]
+   [om.dom :as dom]
    [jayq.core :refer [$]]
    [clustermap.api :as api]
    [clustermap.app :as app]
@@ -405,14 +406,14 @@
                                                             :metric :viewfilter_doc_count
                                                             :label (fn [{:keys [filt]}]
                                                                      (case (company-type-from-filter filt)
-                                                                       "cambridge_based" "Cambridge-based companies"
-                                                                       "cambridge_active" "Cambridge-active companies"
-                                                                       "non_corporate" "Non-corporate KI laboratories"
+                                                                       "cambridge_based" (dom/span nil "Cambridge-based" (dom/br nil nil) "companies")
+                                                                       "cambridge_active" (dom/span nil "Cambridge-active" (dom/br nil nil) "companies")
+                                                                       "non_corporate" (dom/span nil "Non-corporate KI" (dom/br nil nil) " laboratories")
                                                                        "ALL: Companies and Non-corporate labs"))
                                                             :render-fn (fn [v] (num/mixed v))}
                                                            {:key :!latest_turnover
                                                             :metric :sum
-                                                            :label "Total turnover"
+                                                            :label (dom/span nil "Total" (dom/br nil nil) " turnover")
                                                             :render-fn (fn [v] (if v
                                                                                  (num/mixed v {:curr "£"})
                                                                                  "N/a"))}
@@ -428,7 +429,7 @@
                                                                                   "%"]))}
                                                            {:key :!latest_employee_count
                                                             :metric :sum
-                                                            :label "Total employees"
+                                                            :label (dom/span nil "Total" (dom/br nil nil) " employees")
                                                             :render-fn (fn [v] (if v (num/mixed v) "N/a"))}
                                                            {:key :!latest_employee_count_delta
                                                             :belongs-to :!latest_employee_count
