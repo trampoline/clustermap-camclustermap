@@ -283,7 +283,7 @@
                                :location-attr "!location"
                                :attrs ["?natural_id" "!name" "!location" "!latest_employee_count" "!latest_turnover"]
                                :sort-spec [{"!latest_turnover" "desc"}{"!latest_employment" "desc"}]
-                               :marker-opts {:display-turnover true
+                               :marker-opts {:display-turnover false
                                              :display-employee-count false
                                              :display-principal-name false}
 

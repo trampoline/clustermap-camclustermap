@@ -29,6 +29,7 @@
            {:value "life_science_and_healthcare" :label "Life Science and Healthcare"}
            {:value "manufacturing" :label "Manufacturing"}
            {:value "other_business_services" :label "Other Business Services"}
+           {:value "other_services" :label "Other Services"}
            ;;{:value "personal_services" :label "Personal services"}
            {:value "primary" :label "Primary"}
            {:value "property_and_finance" :label "Property and finance"}
@@ -105,7 +106,7 @@
     :label "Networks"
     :sorted false
     :visible false
-    :controls true
+    :controls false
     :options [{:value "cambridge_wireless" :label "Cambridge Wireless"
                :filter {:bool {:should (mapv (fn [id] {:term {"?natural_id" id}})
                                              filter-values/wireless-company-nos)}}}]}
