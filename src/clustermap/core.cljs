@@ -886,7 +886,8 @@
          :data-available-fn (fn [filter-spec metric-type]
                               ;; handle "turnover" :!turnover
                               (case (company-type-from-filter filter-spec)
-                                "non_corporate" (not (str/includes? (str metric-type) "turnover"))
+                                "non_corporate" (not (or (str/includes? (str metric-type) "turnover")
+                                                         (str/includes? (str metric-type) "sector")))
                                 "cambridge_active" (str/includes? (str metric-type) "counter")
                                 true))
          :search-chan (chan)})
