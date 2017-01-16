@@ -1,23 +1,25 @@
 (set-env!
  :source-paths    #{"src"  #_"checkouts/clustermap-components/src/clustermap"}
  :resource-paths  #{"resources"}
- :dependencies '[[adzerk/boot-cljs          "1.7.228-1"   :scope "test"]
-                 [adzerk/boot-cljs-repl     "0.3.2"      :scope "test"]
-                 [adzerk/boot-reload        "0.4.10"      :scope "test"]
+ :dependencies '[[adzerk/boot-cljs          "1.7.228-2"   :scope "test"]
+                 [adzerk/boot-cljs-repl     "0.3.3"      :scope "test"]
+                 [adzerk/boot-reload        "0.4.13"      :scope "test"]
                  [pandeiro/boot-http        "0.7.3"      :scope "test"]
                  [crisptrutski/boot-cljs-test "0.2.1" :scope "test"]
                  [com.cemerick/piggieback "0.2.1" :scope "test"]
                  [org.clojure/tools.nrepl "0.2.12" :scope "test"]
+                 [org.clojure/test.check "0.9.0" :scope "test"]
 
                  [org.clojure/clojure "1.9.0-alpha5"]
-                 [org.clojure/clojurescript "1.9.93"]
-                 [org.clojure/core.async "0.2.385"]
-                 [com.taoensso/timbre "4.4.0"]
+                 [org.clojure/clojurescript "1.9.293"]
+                 [org.clojure/core.async "0.2.395"]
+                 [com.taoensso/timbre "4.7.4"]
                  [org.omcljs/om "1.0.0-alpha36"]
                  [binaryage/devtools "0.7.2"]
                  [weasel "0.7.0" :scope "test"]
-                 [cljsjs/react "15.1.0-0"]
-                 [cljsjs/react-dom "15.1.0-0"]
+                 [cljsjs/react "15.3.1-0"]
+                 [cljsjs/react-dom "15.3.1-0"]
+                 [cljsjs/raven "3.5.1-0"]
 
                  [clustermap-components "0.2.0-SNAPSHOT"]
                  ])
@@ -29,6 +31,10 @@
  '[pandeiro.boot-http    :refer [serve]]
  '[crisptrutski.boot-cljs-test :refer [test-cljs]]
  )
+
+(import
+ '[java.time ZonedDateTime]
+ '[java.time.format DateTimeFormatter])
 
 (deftask build []
   (comp (speak)
@@ -44,6 +50,10 @@
 
 (deftask production []
   (task-options! cljs {:optimizations :advanced
+                       :compiler-options {:closure-defines {"goog.DEBUG" false
+                                                            "clustermap.core.RAVEN_DSN" (System/getenv "RAVEN_DSN")
+                                                            "clustermap.core.RELEASE" (.. (ZonedDateTime/now)
+                                                                                          (format DateTimeFormatter/ISO_INSTANT))}}
                        :source-map true})
   identity)
 
