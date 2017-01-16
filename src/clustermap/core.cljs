@@ -135,7 +135,7 @@
   [:a {:href "#"
        :target "_blank"
        :onClick (fn [e]
-                  (.preventDefault e)
+                  (some-> e .preventDefault)
                   (make-company-selection (:?natural_id record))
                   (app/navigate @app-instance "company"))}
    name])
@@ -649,8 +649,8 @@
 
    :reset-all {:content (constantly [:h1.logo "Cambridge"])
                :action (fn [e]
-                         (js/console.log "reset all")
-                         (.preventDefault e)
+
+                         (some-> e .preventDefault)
 
                          (reset! (get-app-state-atom)
                                  (-> @(get-app-state-atom)
