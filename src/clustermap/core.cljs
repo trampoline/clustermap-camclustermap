@@ -35,12 +35,24 @@
    [clustermap.components.action-link :as action-link]
    [clustermap.boundarylines :as bl]
    [clustermap.component-specs :as component-specs]
+   [clustermap.util :as util :refer [inspect]]
    [cljs.core.async :refer [chan <! put! sliding-buffer >!]]
    [schema.core :as s :refer-macros [defschema]]))
 
+(def RELEASE "@define {string}" "")
+(def RAVEN_DSN "@define {string}" "")
+
 ;; assume we are in dev-mode if there is repl support
 (def ^:private dev-mode (some-> js/window .-config .-repl))
-(if ^boolean js/goog.DEBUG (devtools/install! :all))
+(when ^boolean js/goog.DEBUG
+  (inspect "debug")
+  (devtools/install! :all))
+(when-not ^boolean js/goog.DEBUG
+  (inspect (-> (js/Raven.config ^string clustermap.core/RAVEN_DSN
+                                #js {:release ^string clustermap.core/RELEASE})
+               .install)))
+
+(if ^boolean js/goog.DEBUG (devtools/install!))
 
 ;; the IApp object
 (def ^:private app-instance (atom nil))
