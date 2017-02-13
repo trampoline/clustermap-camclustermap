@@ -102,15 +102,13 @@
               ]}
 
    {:id :networks
-    :type :checkboxes
+    :type :tag-checkboxes
     :label "Networks"
-    :sorted false
+    :sorted true
     :visible false
-    :controls false
-    :options [{:value "cambridge_wireless" :label "Cambridge Wireless"
-               :filter {:bool {:should (mapv (fn [id] {:term {"?natural_id" id}})
-                                             filter-values/wireless-company-nos)}}}]}
-
+    :tag-type "cambridge_network"
+    :tags [{:value "cambridge_wireless" :label "Cambridge Wireless"}
+           {:value "one_nucleus" :label "One Nucleus"}]}
 
    {:id :highgrowth
     :type :checkboxes
