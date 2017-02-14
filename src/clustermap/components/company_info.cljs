@@ -58,7 +58,18 @@
           [:li
            [:h4 "Sector"]
            [:p
-            (some->> record :tags (filter #(= "broad_12_sectors" (:type %))) first :description)]]
+            (some->> record
+                     :tags
+                     (filter #(= "broad_12_sectors" (:type %)))
+                     first
+                     :description)]
+           [:h4 "Sub-sector"]
+           [:p
+            (some->> record
+                     :tags
+                     (filter #(= "narrow_sectors" (:type %)))
+                     first
+                     :description)]]
           (when (:web_url record)
             [:li
              [:h4 "Website"
