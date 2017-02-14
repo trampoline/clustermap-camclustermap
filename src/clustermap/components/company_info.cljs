@@ -85,7 +85,21 @@
             [:address
              [:h4 "Address"]]
             (for [line (str/split (:postcode record) #",|\n")]
-              [:div line]))]]]]]
+              [:div line]))]
+          [:div.col-sm-6
+           [:p
+            (when-let [network (some->> record
+                                        :tags
+                                        (filter #(= "cambridge_network" (:type %)))
+                                        first)]
+              (let [network-img (case (:tag network)
+                                  "one_nucleus" "/img/one_nucleus.png"
+                                  "cambridge_wireless" "/img/cambridge_wireless_logo_medium.jpg")]
+
+                [:div
+                 [:h4 "Network"]
+                 [:img {:src network-img :alt (:description network)
+                        :style {"max-width" "200px"}}]]))]]]]]]
       ]
 
      [:div.panel-row
