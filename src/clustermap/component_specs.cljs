@@ -110,17 +110,14 @@
     :tags [{:value "cambridge_wireless" :label "Cambridge Wireless"}
            {:value "one_nucleus" :label "One Nucleus"}]}
 
-   {:id :highgrowth
-    :type :checkboxes
+   {:id :scaleups
+    :type :tag-checkboxes
     :label "Scaleups"
+    :sorted false
     :visible false
-    :options [#_{:value "latest" :label "Scaleup companies" :filter scaleup-filter}
-              {:value "turnover" :label "Turnover"
-               :filter {:bool {:should (mapv (fn [id] {:term {"?natural_id" id}})
-                                             filter-values/upscaler-turnover-company-nos)}}}
-              {:value "employment" :label "Employment"
-               :filter {:bool {:should (mapv (fn [id] {:term {"?natural_id" id}})
-                                             filter-values/upscaler-employment-company-nos)}}}]}
+    :tag-type "cambridge_upscaler"
+    :tags [{:value "employment" :label "Employment"}
+           {:value "turnover" :label "Turnover"}]}
 
    {:id :employee-count
     :type :checkboxes
