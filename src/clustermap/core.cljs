@@ -7,6 +7,7 @@
    [om.core :as om :include-macros true]
    [om.dom :as dom]
    [jayq.core :refer [$]]
+   [domina.events :as events]
    [clustermap.api :as api]
    [clustermap.app :as app]
    [clustermap.filters :as filters]
@@ -130,14 +131,34 @@
         composed (filters/compose-filters components base-filters)]
     (swap! state-atom update-in [:selection-filter-spec] merge {:components components :composed composed})))
 
+(defn company-selection-handler [e]
+  (if @app-instance
+    (make-company-selection (:company-id e))
+    (add-watch app-instance :company-selection
+               (fn [key a old new]
+                 (when new
+                   (remove-watch a key)
+                   (make-company-selection (:company-id e)))))))
+
+(defn company-selection-handler2
+  "Call make-company-selection when app-intance is not nil. If it is
+  nil then wait 5 seconds and try again. Using an atom watch doesn't
+  work because the company id gets overridden if set to early"
+  [e]
+  (if @app-instance
+    (make-company-selection (:company-id e))
+    (do
+      (js/setTimeout (fn [] (when @app-instance
+                              (make-company-selection (:company-id e))))
+                     5000))))
+
 (defn company-link-render-fn
   [name record]
   [:a {:href "#"
        :target "_blank"
        :onClick (fn [e]
                   (some-> e .preventDefault)
-                  (make-company-selection (:?natural_id record))
-                  (app/navigate @app-instance "company"))}
+                  (app/navigate @app-instance (str "company/" (:?natural_id record))))}
    name])
 
 (defn sign-icon
@@ -241,8 +262,7 @@
                                :col-headers  ["Name" "Postcode"]
 
                                :click-fn (fn [r]
-                                           (make-company-selection (:natural_id r))
-                                           (app/navigate @app-instance "company"))
+                                           (app/navigate @app-instance (str "company/" (:natural_id r))))
                                }
                     :query nil
                     :placeholder "Company or postcode search"
@@ -337,8 +357,7 @@
                                                    [:div.metric.metric-2
                                                     [:span.name "Emp"] [:span.value (num/compact (:latest_employee_count i))]]]])
                                :item-click-fn (fn [r e]
-                                                (make-company-selection (:natural_id r))
-                                                (app/navigate @app-instance "company")
+                                                (app/navigate @app-instance (str "company/" (:natural_id r)))
                                                 (.log js/console (clj->js ["CLICK" r e])))}
 
                     :zoom nil
@@ -885,6 +904,8 @@
 (defn create-app-service
   []
   (let [event-handlers (atom nil)]
+    (events/listen! :clustermap-company-selection
+                    company-selection-handler2)
     (reify
 
       app/IAppService
@@ -905,7 +926,8 @@
          :search-chan (chan)})
 
       (destroy [this app]
-        (.log js/console "DESTROY APP!"))
+        (.log js/console "DESTROY APP!")
+        (events/unlisten! :clustermap-company-selection))
 
       (handle-event [this app type val]
         )
