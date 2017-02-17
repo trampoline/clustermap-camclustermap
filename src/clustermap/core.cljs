@@ -37,7 +37,7 @@
    [clustermap.boundarylines :as bl]
    [clustermap.component-specs :as component-specs]
    [clustermap.util :as util :refer [inspect]]
-   [cljs.core.async :refer [chan <! put! sliding-buffer >!]]
+   [cljs.core.async :as async :refer [chan <! put! sliding-buffer >!]]
    [schema.core :as s :refer-macros [defschema]]))
 
 (def RELEASE "@define {string}" "")
@@ -656,6 +656,9 @@
 
    :company-close {:text "Close"
                    :target-view "main"
+                   :on-click-action (fn [e app owner]
+                                      (when-let [search-chan (om/get-shared owner :search-chan)]
+                                        (async/put! search-chan :clear)))
                    :class "btn btn-primary"}
 
    :reset-map-view {:text "Reset view"
