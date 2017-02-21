@@ -224,9 +224,10 @@
           (js/console.debug point-data)
           (om/update! map-state [:point-data] point-data)))
 
-      (when (or (not next-record)
-                (not= next-controls controls)
-                (not= next-filter-spec filter-spec))
+      (when (and next-filter-spec
+                 (or (not next-record)
+                     (not= next-controls controls)
+                     (not= next-filter-spec filter-spec)))
 
         (go
           (when-let [metadata-data (<! (fetch-metadata-fn next-index
