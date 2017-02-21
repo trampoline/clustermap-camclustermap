@@ -533,7 +533,7 @@
                              :time-variable "?accounts_date"
                              :metrics {:variable :!turnover :title "Turnover (£)" :metric :sum}
                              :interval "year"
-                             :before "2016-01-01"}
+                             :before "2017-01-01"}
                      :color "#28828a"
                      :timeline-data nil}
 
