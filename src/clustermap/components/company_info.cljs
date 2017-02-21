@@ -70,11 +70,14 @@
                      (filter #(= "narrow_sectors" (:type %)))
                      first
                      :description)]]
-          (when (:web_url record)
+          (when-let [url (:web_url record)]
             [:li
              [:h4 "Website"
               [:p
-               [:a {:href (:web_url record) :target "_blank"} (:web_url record)]]]])]]]]
+               [:a {:href (if (str/starts-with? url "http")
+                            url
+                            (str "http://" url))
+                    :target "_blank"} url]]]])]]]]
 
       [:div.panel
        [:div.panel-body
