@@ -490,7 +490,10 @@
                                   :sortable true
                                   :label "Turnover (£)"
                                   :right-align true
-                                  :render-fn #(num/mixed %)}
+                                  :render-fn (fn [v r]
+                                               [:span {:style (when (:!latest_turnover_is_estimate r)
+                                                                {:color "red"})}
+                                                (num/mixed v)])}
                                  {:key :!latest_turnover_delta
                                   :sortable true
                                   :label "Turn. change"
@@ -506,7 +509,10 @@
                                   :sortable true
                                   :label "Employees"
                                   :right-align true
-                                  :render-fn #(num/mixed %)}
+                                  :render-fn (fn [v r]
+                                               [:span {:style (when (:!latest_employee_count_is_estimate r)
+                                                                {:color "red"})}
+                                                (num/mixed v)])}
                                  {:key :!latest_employee_count_delta
                                   :sortable true
                                   :label "Emp. change"
