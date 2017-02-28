@@ -114,7 +114,12 @@
            [:h4.stat-title "Turnover"]
            [:div {:style (util/display (not show))} "Data not available"]
            [:span {:style (util/display show)}
-            [:div.stat-amount [:small "£"] (num/mixed (:latest_turnover record))]
+            [:div.stat-amount
+             [:small "£"]
+             [:span (when (:latest_turnover_is_estimate record)
+                      {:class "estimated-metric"
+                       :style {:color "red"}})
+              (num/mixed (:latest_turnover record))]]
             (stat-change (:latest_turnover record) (:latest_turnover_delta record))]]
           [:div.chart-container-lg {:style (util/display show)}
            (om/build timeline-chart/timeline-chart {:timeline-chart turnover-timeline
@@ -127,7 +132,11 @@
            [:h4.stat-title "Employment"]
            [:div {:style (util/display (not show))} "Data not available"]
            [:span {:style (util/display show)}
-            [:div.stat-amount (num/mixed (:latest_employee_count record))]
+            [:div.stat-amount
+             [:span (when (:latest_employee_count_is_estimate record)
+                      {:class "estimated-metric"
+                       :style {:color "red"}})
+              (num/mixed (:latest_employee_count record))]]
             (stat-change (:latest_employee_count record) (:latest_employee_count_delta record))]]
           [:div.chart-container-lg {:style (util/display show)}
            (om/build timeline-chart/timeline-chart {:timeline-chart employment-timeline
