@@ -313,7 +313,8 @@
 
                     :location {:cluster false
                                :location-attr "!location"
-                               :attrs ["?natural_id" "!name" "!location" "!latest_employee_count" "!latest_turnover"]
+                               :attrs ["?natural_id" "!name" "!location" "!latest_employee_count"
+                                       "!latest_turnover" "!latest_turnover_is_estimate" "!latest_employee_count_is_estimate"]
                                :sort-spec [{"!latest_turnover" "desc"}{"!latest_employment" "desc"}]
                                :marker-opts {:display-turnover false
                                              :display-employee-count false
@@ -353,9 +354,13 @@
                                                   [:div.name (get i :name)]
                                                   [:div.metrics
                                                    [:div.metric.metric-1
-                                                    [:span.name "T/o"] [:span.value (num/compact (:latest_turnover i))]]
+                                                    [:span.name "T/o"]
+                                                    [:span.value {:style (when (:latest_turnover_is_estimate i) "color:red")}
+                                                     (num/compact (:latest_turnover i))]]
                                                    [:div.metric.metric-2
-                                                    [:span.name "Emp"] [:span.value (num/compact (:latest_employee_count i))]]]])
+                                                    [:span.name "Emp"]
+                                                    [:span.value {:style (when (:latest_employee_count_is_estimate i) "color:red")}
+                                                     (num/compact (:latest_employee_count i))]]]])
                                :item-click-fn (fn [r e]
                                                 (app/navigate @app-instance (str "company/" (:natural_id r)))
                                                 (.log js/console (clj->js ["CLICK" r e])))}
