@@ -681,16 +681,16 @@
                     :class "btn btn-default"}
 
    :reset-all {:content (constantly [:h1.logo "Cambridge"])
-               :action (fn [e]
-
-                         (some-> e .preventDefault)
+               :action (fn [app]
+                         (inspect "reset-all")
 
                          (reset! (get-app-state-atom)
                                  (-> @(get-app-state-atom)
                                      (assoc-in [:map :controls :bounds]
                                                (get-in @(get-app-state-atom) [:map :controls :initial-bounds]))
                                      (assoc-in [:dynamic-filter-spec]
-                                               (filters/reset-filter (get-in @(get-app-state-atom) [:dynamic-filter-spec]))))))}
+                                               (filters/reset-filter (get-in @(get-app-state-atom) [:dynamic-filter-spec])))))
+                         (app/navigate app "main"))}
    })
 
 (def initial-state* (assoc initial-state
