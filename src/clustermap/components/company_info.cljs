@@ -224,13 +224,12 @@
         (let [point-data {:count 1
                           :records {(keyword (pr-str (:location next-record)))
                                     {:location (:location next-record)
-                                     :records [{:natural_id (:natural_id next-record)
-                                                :location (:location next-record)
-                                                :name (:name next-record )
-                                                :latest_turnover (:latest_turnover next-record)
-                                                :latest_employee_count (:latest_employee_count next-record)
-                                                }]}}}]
-          (js/console.debug point-data)
+                                     :records [(select-keys next-record
+                                                            [:natural_id :location
+                                                             :name :latest_turnover
+                                                             :latest_turnover_is_estimate
+                                                             :latest_employee_count
+                                                             :latest_employee_count_is_estimate])]}}}]
           (om/update! map-state [:point-data] point-data)))
 
       (when (and next-filter-spec
