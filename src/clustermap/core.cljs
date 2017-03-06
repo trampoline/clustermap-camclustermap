@@ -681,7 +681,7 @@
                     :class "btn btn-default"}
 
    :reset-all {:content (constantly [:h1.logo "Cambridge"])
-               :action (fn [app]
+               :action (fn [app owner]
                          (inspect "reset-all")
 
                          (reset! (get-app-state-atom)
@@ -690,6 +690,8 @@
                                                (get-in @(get-app-state-atom) [:map :controls :initial-bounds]))
                                      (assoc-in [:dynamic-filter-spec]
                                                (filters/reset-filter (get-in @(get-app-state-atom) [:dynamic-filter-spec])))))
+                         (when-let [search-chan (om/get-shared owner :search-chan)]
+                           (async/put! search-chan :clear))
                          (app/navigate app "main"))}
    })
 
